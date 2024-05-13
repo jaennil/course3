@@ -7,6 +7,7 @@ public class LambdaTest extends BaseTests {
     @Test
     public void test() {
         pageManager.getHomePage()
-                .checkHeaderIsPresent();
+                .verifyHeaderPresence()
+                .verifyRemainingTasksPresence();
     }
 }
