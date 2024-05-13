@@ -44,13 +44,24 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    private boolean getTodoState(WebElement todo) {
+        WebElement todoInput = todo.findElement(By.tagName("input"));
+        return todoInput.isSelected();
+    }
+
     public HomePage clickTodo(int index) {
         int remainingTodosAmount = getRemainingTodosAmount();
         WebElement todo = todos.get(index);
+        boolean todoState = getTodoState(todo);
         WebElement todoInput = todo.findElement(By.tagName("input"));
         todoInput.click();
-        verifyTodoState(index, true);
-        Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount - 1);
+        if (todoState) {
+            Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + 1);
+            verifyTodoState(index, false);
+        } else {
+            Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount - 1);
+            verifyTodoState(index, true);
+        }
         return this;
     }
 
