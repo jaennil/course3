@@ -11,6 +11,7 @@ import java.time.Duration;
 public class BasePage {
     protected final DriverManager driverManager = DriverManager.getInstance();
     protected WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(3), Duration.ofSeconds(1));
+
     public BasePage() {
         PageFactory.initElements(driverManager.getDriver(), this);
     }

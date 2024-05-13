@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import ru.dubrovskih.first.BaseTests;
 
 public class LambdaTest extends BaseTests {
-	@Test
-	public void test() {
-		pageManager.getHomePage()
-				.checkHeaderIsPresent();
-	}
+    @Test
+    public void test() {
+        pageManager.getHomePage()
+                .checkHeaderIsPresent();
+    }
 }

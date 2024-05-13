@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class HomePage extends BasePage {
 
-    @FindBy(tagName="h2")
+    @FindBy(tagName = "h2")
     private WebElement header;
 
     public void checkHeaderIsPresent() {
