@@ -2,14 +2,19 @@ package ru.dubrovskih.first.tests;
 
 import org.junit.jupiter.api.Test;
 import ru.dubrovskih.first.BaseTests;
+import ru.dubrovskih.first.pages.HomePage;
 
 public class LambdaTest extends BaseTests {
     @Test
     public void test() {
-        pageManager.getHomePage()
-                .verifyHeaderPresence()
-                .verifyRemainingTasksPresence()
-                .verifyTodoState(0, false)
-                .clickTodo(0);
+
+        HomePage homePage = pageManager.getHomePage();
+        homePage.verifyHeaderPresence()
+                .verifyRemainingTasksPresence();
+
+        for (int i = 0; i < 5; i++) {
+            homePage.verifyTodoState(i, false)
+                    .clickTodo(i);
+        }
     }
 }
