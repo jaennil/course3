@@ -13,10 +13,13 @@ public class HomePage extends BasePage {
     private WebElement header;
 
     @FindBy(xpath = "//span[@class='ng-binding']")
-    private WebElement remainingTasks;
+    private WebElement remainingTodos;
 
     @FindBy(xpath = "//ul/li")
     private List<WebElement> todos;
+
+    @FindBy(id = "addbutton")
+    private WebElement addButton;
 
     public HomePage verifyHeaderPresence() {
         WebElement headerElement = waitUntilElementIsVisible(header);
@@ -26,7 +29,7 @@ public class HomePage extends BasePage {
     }
 
     public HomePage verifyRemainingTasksPresence() {
-        WebElement remainingTasksElement = waitUntilElementIsVisible(remainingTasks);
+        WebElement remainingTasksElement = waitUntilElementIsVisible(remainingTodos);
         Assertions.assertTrue(remainingTasksElement.isDisplayed());
         String remainingTasksText = remainingTasksElement.getText();
         Assertions.assertEquals("5 of 5 remaining", remainingTasksText);
@@ -45,6 +48,32 @@ public class HomePage extends BasePage {
         WebElement todo = todos.get(index);
         WebElement todoInput = todo.findElement(By.tagName("input"));
         todoInput.click();
+        return this;
+    }
+
+    private int getRemainingTodosAmount() {
+        String remainingTodosText = remainingTodos.getText();
+        String[] parts = remainingTodosText.split(" ");
+        return Integer.parseInt(parts[0]);
+    }
+
+    private int getTotalTodosAmount() {
+        String remainingTodosText = remainingTodos.getText();
+        String[] parts = remainingTodosText.split(" ");
+        return Integer.parseInt(parts[2]);
+    }
+
+    public HomePage addTodo() {
+        int totalTodosAmount = getTotalTodosAmount();
+        int remainingTodosAmount = getRemainingTodosAmount();
+
+        addButton.click();
+
+        verifyTodoState(todos.size() - 1, false);
+
+        Assertions.assertEquals(getTotalTodosAmount(), totalTodosAmount + 1);
+        Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + 1);
+
         return this;
     }
 }

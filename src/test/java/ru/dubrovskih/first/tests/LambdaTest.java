@@ -16,5 +16,7 @@ public class LambdaTest extends BaseTests {
             homePage.verifyTodoState(i, false)
                     .clickTodo(i);
         }
+
+        homePage.addTodo();
     }
 }
