@@ -40,4 +40,11 @@ public class HomePage extends BasePage {
         Assertions.assertEquals(expectedClass, todoSpan.getAttribute("class"));
         return this;
     }
+
+    public HomePage clickTodo(int index) {
+        WebElement todo = todos.get(index);
+        WebElement todoInput = todo.findElement(By.tagName("input"));
+        todoInput.click();
+        return this;
+    }
 }
