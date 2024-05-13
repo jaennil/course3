@@ -45,9 +45,12 @@ public class HomePage extends BasePage {
     }
 
     public HomePage clickTodo(int index) {
+        int remainingTodosAmount = getRemainingTodosAmount();
         WebElement todo = todos.get(index);
         WebElement todoInput = todo.findElement(By.tagName("input"));
         todoInput.click();
+        verifyTodoState(index, true);
+        Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount - 1);
         return this;
     }
 
