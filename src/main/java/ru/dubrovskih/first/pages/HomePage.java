@@ -1,5 +1,6 @@
 package ru.dubrovskih.first.pages;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,7 @@ public class HomePage extends BasePage {
     @FindBy(id = "addbutton")
     private WebElement addButton;
 
+    @Step()
     public HomePage verifyHeaderPresence() {
         WebElement headerElement = waitUntilElementIsVisible(header);
         Assertions.assertTrue(headerElement.isDisplayed());
@@ -28,6 +30,7 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    @Step()
     public HomePage verifyRemainingTasksPresence() {
         WebElement remainingTasksElement = waitUntilElementIsVisible(remainingTodos);
         Assertions.assertTrue(remainingTasksElement.isDisplayed());
@@ -36,6 +39,7 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    @Step()
     public HomePage verifyTodoState(int index, boolean state) {
         WebElement todo = todos.get(index);
         WebElement todoSpan = todo.findElement(By.tagName("span"));
@@ -44,11 +48,13 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    @Step()
     private boolean getTodoState(WebElement todo) {
         WebElement todoInput = todo.findElement(By.tagName("input"));
         return todoInput.isSelected();
     }
 
+    @Step()
     public HomePage clickTodo(int index) {
         int remainingTodosAmount = getRemainingTodosAmount();
         WebElement todo = todos.get(index);
@@ -65,18 +71,21 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    @Step()
     private int getRemainingTodosAmount() {
         String remainingTodosText = remainingTodos.getText();
         String[] parts = remainingTodosText.split(" ");
         return Integer.parseInt(parts[0]);
     }
 
+    @Step()
     private int getTotalTodosAmount() {
         String remainingTodosText = remainingTodos.getText();
         String[] parts = remainingTodosText.split(" ");
         return Integer.parseInt(parts[2]);
     }
 
+    @Step()
     public HomePage addTodo() {
         int totalTodosAmount = getTotalTodosAmount();
         int remainingTodosAmount = getRemainingTodosAmount();
