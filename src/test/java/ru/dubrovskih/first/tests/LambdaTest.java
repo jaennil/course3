@@ -1,10 +1,12 @@
 package ru.dubrovskih.first.tests;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.dubrovskih.first.BaseTests;
 import ru.dubrovskih.first.pages.HomePage;
 
 public class LambdaTest extends BaseTests {
+    @DisplayName("aoeu")
     @Test
     public void test() {
 
