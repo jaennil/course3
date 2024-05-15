@@ -6,13 +6,13 @@ import ru.dubrovskih.first.BaseTests;
 import ru.dubrovskih.first.pages.HomePage;
 
 public class LambdaTest extends BaseTests {
-    @DisplayName("aoeu")
+    @DisplayName("https://lambdatest.githib.io sample todo app basic tests")
     @Test
-    public void test() {
+    public void basicTests() {
 
-        HomePage homePage = pageManager.getHomePage();
-        homePage.verifyHeaderPresence()
-                .verifyRemainingTasksPresence();
+        HomePage homePage = pageManager.getHomePage()
+                .open()
+                .verifyRemainingTasksTextPresence();
 
         for (int i = 0; i < 5; i++) {
             homePage.verifyTodoState(i, false)
