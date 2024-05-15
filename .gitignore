@@ -1,4 +1,5 @@
 target/
+.vim/
 .idea/
 .allure/
 .project
