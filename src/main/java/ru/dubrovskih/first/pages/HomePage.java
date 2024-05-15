@@ -23,27 +23,30 @@ public class HomePage extends BasePage {
     @FindBy(id = "addbutton")
     private WebElement addButton;
 
-    @Step("open link https://lambdatest.github.io/sample-todo-app/")
     public HomePage open() {
-        driverManager.getDriver().get("https://lambdatest.github.io/sample-todo-app/");
-        verifyHeaderPresence();
+        Allure.step("open link https://lambdatest.github.io/sample-todo-app/ %s", step -> {
+            driverManager.getDriver().get("https://lambdatest.github.io/sample-todo-app/");
+            verifyHeaderPresence();
+        });
         return this;
     }
 
-    @Step("verify 'LambdaTest Sample App' header presence")
     public HomePage verifyHeaderPresence() {
-        WebElement headerElement = waitUntilElementIsVisible(header);
-        Assertions.assertTrue(headerElement.isDisplayed());
-        Assertions.assertEquals(headerElement.getText(), "LambdaTest Sample App");
+        Allure.step("verify 'LambdaTest Sample App' header presence", step -> {
+            WebElement headerElement = waitUntilElementIsVisible(header);
+            Assertions.assertTrue(headerElement.isDisplayed());
+            Assertions.assertEquals(headerElement.getText(), "LambdaTest Sample App");
+        });
         return this;
     }
 
-    @Step("verify '5 of 5 remaining' text presence")
     public HomePage verifyRemainingTasksTextPresence() {
-        WebElement remainingTasksElement = waitUntilElementIsVisible(remainingTodos);
-        Assertions.assertTrue(remainingTasksElement.isDisplayed());
-        String remainingTasksText = remainingTasksElement.getText();
-        Assertions.assertEquals("5 of 5 remaining", remainingTasksText);
+        Allure.step("verify '5 of 5 remaining' text presence", step -> {
+            WebElement remainingTasksElement = waitUntilElementIsVisible(remainingTodos);
+            Assertions.assertTrue(remainingTasksElement.isDisplayed());
+            String remainingTasksText = remainingTasksElement.getText();
+            Assertions.assertEquals("5 of 5 remaining", remainingTasksText);
+        });
         return this;
     }
 
@@ -96,18 +99,19 @@ public class HomePage extends BasePage {
         return Integer.parseInt(parts[2]);
     }
 
-    @Step("add new todo")
     public HomePage addTodo() {
-        int totalTodosAmount = getTotalTodosAmount();
-        int remainingTodosAmount = getRemainingTodosAmount();
+        Allure.step("add new todo", step -> {
+            int totalTodosAmount = getTotalTodosAmount();
+            int remainingTodosAmount = getRemainingTodosAmount();
 
-        addButton.click();
+            addButton.click();
 
-        verifyTodoState(todos.size() - 1, false);
+            verifyTodoState(todos.size() - 1, false);
 
-        Assertions.assertEquals(getTotalTodosAmount(), totalTodosAmount + 1);
-        Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + 1);
+            Assertions.assertEquals(getTotalTodosAmount(), totalTodosAmount + 1);
+            Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + 1);
 
+        });
         return this;
     }
 }

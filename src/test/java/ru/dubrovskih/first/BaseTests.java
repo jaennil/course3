@@ -1,5 +1,6 @@
 package ru.dubrovskih.first;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import ru.dubrovskih.first.managers.InitManager;
