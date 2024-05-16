@@ -1,4 +1,4 @@
-package ru.dubrovskih.first;
+package ru.dubrovskih.course;
 
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import ru.dubrovskih.first.managers.DriverManager;
+import ru.dubrovskih.course.managers.DriverManager;
 
 import java.io.File;
 import java.io.FileOutputStream;

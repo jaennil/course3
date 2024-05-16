@@ -1,10 +1,11 @@
-package ru.dubrovskih.first.pages;
+package ru.dubrovskih.course.first.pages;
 
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import ru.dubrovskih.course.BasePage;
 
 import java.util.List;
 

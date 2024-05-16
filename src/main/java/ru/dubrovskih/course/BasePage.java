@@ -1,12 +1,13 @@
-package ru.dubrovskih.first.pages;
+package ru.dubrovskih.course;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.dubrovskih.first.managers.DriverManager;
+import ru.dubrovskih.course.managers.DriverManager;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BasePage {
     protected final DriverManager driverManager = DriverManager.getInstance();
@@ -18,5 +19,9 @@ public class BasePage {
 
     protected WebElement waitUntilElementIsVisible(WebElement element) {
         return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    protected List<WebElement> waitUntilElementsIsVisible(List<WebElement> elements) {
+        return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 }

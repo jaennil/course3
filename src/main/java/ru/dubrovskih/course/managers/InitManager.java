@@ -1,4 +1,4 @@
-package ru.dubrovskih.first.managers;
+package ru.dubrovskih.course.managers;
 
 public class InitManager {
 

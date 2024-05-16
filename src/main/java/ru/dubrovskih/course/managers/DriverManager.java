@@ -1,4 +1,4 @@
-package ru.dubrovskih.first.managers;
+package ru.dubrovskih.course.managers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,7 +26,7 @@ public class DriverManager {
         return driver;
     }
 
-    public void quit() {
+    void quit() {
         if (driver != null) {
             driver.quit();
             driver = null;

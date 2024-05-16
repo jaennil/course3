@@ -1,9 +1,9 @@
-package ru.dubrovskih.first;
+package ru.dubrovskih.course.second;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import ru.dubrovskih.first.managers.InitManager;
-import ru.dubrovskih.first.managers.PageManager;
+import ru.dubrovskih.course.second.PageManager;
+import ru.dubrovskih.course.managers.InitManager;
 
 public class BaseTests {
 

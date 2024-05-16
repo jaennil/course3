@@ -1,6 +1,6 @@
-package ru.dubrovskih.first.managers;
+package ru.dubrovskih.course.first;
 
-import ru.dubrovskih.first.pages.HomePage;
+import ru.dubrovskih.course.first.pages.HomePage;
 
 public class PageManager {
     private static PageManager pageManager;
@@ -9,7 +9,7 @@ public class PageManager {
     private PageManager() {
     }
 
-    public static PageManager getInstance() {
+    static PageManager getInstance() {
         if (pageManager == null) {
             pageManager = new PageManager();
         }
