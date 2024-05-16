@@ -53,8 +53,6 @@ public class CustomTestWatcher implements TestWatcher {
         }
 
         Path screenshotPath = screenshotsPath.resolve(fileName);
-        System.out.println(screenshotPath);
-
         File file = new File(screenshotPath.toString());
 
         file.getParentFile().mkdirs();
