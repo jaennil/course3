@@ -23,7 +23,7 @@ public class HomePage extends BasePage {
     private WebElement addButton;
 
     public HomePage open() {
-        Allure.step("open link https://lambdatest.github.io/sample-todo-app/ %s", step -> {
+        Allure.step("open link https://lambdatest.github.io/sample-todo-app/", step -> {
             driverManager.getDriver().get("https://lambdatest.github.io/sample-todo-app/");
             verifyHeaderPresence();
         });
