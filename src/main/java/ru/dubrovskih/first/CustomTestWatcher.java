@@ -1,5 +1,6 @@
 package ru.dubrovskih.first;
 
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
@@ -23,20 +24,27 @@ public class CustomTestWatcher implements TestWatcher {
 
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
-        String fileName = generateScreenshotFileName(context);
-        takeScreenshot(fileName);
+        takeAndSaveScreenshot(context);
     }
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        String fileName = generateScreenshotFileName(context);
-        takeScreenshot(fileName);
+        takeAndSaveScreenshot(context);
     }
 
-    private void takeScreenshot(String fileName) {
-        WebDriver driver = driverManager.getDriver();
-        byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    private void takeAndSaveScreenshot(ExtensionContext context) {
+        String fileName = generateScreenshotFileName(context);
+        byte[] screenshot = takeScreenshot();
+        saveScreenshot(fileName, screenshot);
+        Allure.getLifecycle().addAttachment("failure screenshot", "image/png", "png", screenshot);
+    }
 
+    private byte[] takeScreenshot() {
+        WebDriver driver = driverManager.getDriver();
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    private void saveScreenshot(String fileName, byte[] screenshot) {
         Path screenshotsPath;
         try {
             screenshotsPath = createScreenshotsDirectory();
@@ -57,7 +65,7 @@ public class CustomTestWatcher implements TestWatcher {
         }
 
         try (FileOutputStream outputStream = new FileOutputStream(screenshotPath.toFile())) {
-            outputStream.write(screenshotBytes);
+            outputStream.write(screenshot);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
