@@ -1,7 +1,6 @@
 package ru.dubrovskih.first.pages;
 
 import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
