@@ -33,8 +33,8 @@ public class HomePage extends BasePage {
     public HomePage verifyHeaderPresence() {
         Allure.step("verify 'LambdaTest Sample App' header presence", step -> {
             WebElement headerElement = waitUntilElementIsVisible(header);
-            Assertions.assertTrue(headerElement.isDisplayed());
-            Assertions.assertEquals(headerElement.getText(), "LambdaTest Sample App");
+            Assertions.assertTrue(headerElement.isDisplayed(), "header 'LambdaTest Sample App' is not displayed");
+            Assertions.assertEquals(headerElement.getText(), "LambdaTest Sample App", "header text is not equal to 'LambdaTest Sample App'");
         });
         return this;
     }
@@ -42,9 +42,9 @@ public class HomePage extends BasePage {
     public HomePage verifyRemainingTasksTextPresence() {
         Allure.step("verify '5 of 5 remaining' text presence", step -> {
             WebElement remainingTasksElement = waitUntilElementIsVisible(remainingTodos);
-            Assertions.assertTrue(remainingTasksElement.isDisplayed());
+            Assertions.assertTrue(remainingTasksElement.isDisplayed(), "remaining tasks text is not displayed");
             String remainingTasksText = remainingTasksElement.getText();
-            Assertions.assertEquals("5 of 5 remaining", remainingTasksText);
+            Assertions.assertEquals("5 of 5 remaining", remainingTasksText, "remaining tasks text is not equal to '5 of 5 remaining'");
         });
         return this;
     }
@@ -57,7 +57,7 @@ public class HomePage extends BasePage {
                 WebElement todo = todos.get(index);
                 WebElement todoSpan = todo.findElement(By.tagName("span"));
                 String expectedClass = String.format("done-%s", state);
-                Assertions.assertEquals(expectedClass, todoSpan.getAttribute("class"));
+                Assertions.assertEquals(expectedClass, todoSpan.getAttribute("class"), String.format("css class 'done-%s' is not applied", state));
             });
         });
 
@@ -78,7 +78,7 @@ public class HomePage extends BasePage {
 
         Allure.step(String.format("mark the todo number %s as %s", index + 1, prevTodoState ? "not done" : "done"), step -> {
             Allure.step(String.format("verify that remaining tasks amount %s by 1", prevTodoState ? "increased" : "decreased"), subStep -> {
-                Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + (prevTodoState ? 1 : -1));
+                Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + (prevTodoState ? 1 : -1), "remaining tasks amount is not " + (prevTodoState ? "increased" : "decreased") + " by 1");
             });
             verifyTodoState(index, !prevTodoState);
         });
@@ -107,8 +107,8 @@ public class HomePage extends BasePage {
 
             verifyTodoState(todos.size() - 1, false);
 
-            Assertions.assertEquals(getTotalTodosAmount(), totalTodosAmount + 1);
-            Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + 1);
+            Assertions.assertEquals(getTotalTodosAmount(), totalTodosAmount + 1, "total todos amount is not increased by 1");
+            Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + 1, "remaining tasks amount is not increased by 1");
 
         });
         return this;
