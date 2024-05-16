@@ -2,7 +2,8 @@
 <Configuration status="DEBUG">
     <Appenders>
         <Console name="LogToConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%style{%-5level}{blue}] - %-60X{name} %style{%-10X{stage}}{yellow} %style{%X{status}}{green} %n"/>
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%style{%level}{blue}] - %-60X{name} %style{%-10X{stage}}{yellow} %style{%X{status}}{green} %n"/>
         </Console>
     </Appenders>
     <Loggers>
