@@ -5,10 +5,7 @@ import io.qameta.allure.model.StepResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
-import org.slf4j.MDC;
 
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Objects;
 
 public class StepsLogger implements StepLifecycleListener {
