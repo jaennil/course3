@@ -15,11 +15,16 @@ import java.util.List;
 public class BasePage {
     protected final DriverManager driverManager = DriverManager.getInstance();
     protected final PageManager pageManager = PageManager.getInstance();
-    protected WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(3), Duration.ofSeconds(1));
+    protected WebDriverWait wait;
     protected JavascriptExecutor js = (JavascriptExecutor) driverManager.getDriver();
 
     public BasePage() {
+        resetDriverWait();
         PageFactory.initElements(driverManager.getDriver(), this);
+    }
+
+    protected void resetDriverWait() {
+        wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(3), Duration.ofSeconds(1));
     }
 
     protected WebElement waitUntilElementIsVisible(WebElement element) {
