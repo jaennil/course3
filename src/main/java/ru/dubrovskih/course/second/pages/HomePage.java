@@ -10,25 +10,8 @@ import java.util.List;
 
 
 public class HomePage extends BasePage {
-    public enum LeftNavigationMenuSection {
-        SEARCH("Поиск"), PERSONAL_ACCOUNT("Личный кабинет"), SCHEDULE("Расписание");
-
-        private String name;
-
-        LeftNavigationMenuSection(String name) {
-            this.name = name;
-        }
-
-        private String getName() {
-            return name;
-        }
-    }
-
     @FindBy(xpath = "//div[@class= 'navigation-menu__left-nav']//a[@class='user-nav__item-link']")
     private List<WebElement> leftNavigationMenu;
-
-    @FindBy(xpath = "//a[@href='https://rasp.dmami.ru/']")
-    private WebElement seeOnTheSiteButton;
 
     public HomePage open() {
         Allure.step("open link https://mospolytech.ru", step -> {
@@ -37,12 +20,14 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage openSideMenuSection(LeftNavigationMenuSection section) {
-        waitUntilElementsIsVisible(leftNavigationMenu);
-        WebElement menuItem = getLeftNavigationMenuItem(section);
-        Assertions.assertNotNull(menuItem, String.format("menu item '%s' is not found", section.getName()));
-        menuItem.click();
-        return this;
+    public MpuSchedulePage openSideMenuSection(LeftNavigationMenuSection section) {
+        Allure.step(String.format("open left navigation menu item '%s'", section.getName()), step -> {
+            waitUntilElementsIsVisible(leftNavigationMenu);
+            WebElement menuItem = getLeftNavigationMenuItem(section);
+            Assertions.assertNotNull(menuItem, String.format("menu item '%s' is not found", section.getName()));
+            menuItem.click();
+        });
+        return pageManager.getMpuSchedulePage();
     }
 
     private WebElement getLeftNavigationMenuItem(LeftNavigationMenuSection section) {
@@ -52,5 +37,19 @@ public class HomePage extends BasePage {
             }
         }
         return null;
+    }
+
+    public enum LeftNavigationMenuSection {
+        SEARCH("Поиск"), PERSONAL_ACCOUNT("Личный кабинет"), SCHEDULE("Расписание");
+
+        private final String name;
+
+        LeftNavigationMenuSection(String name) {
+            this.name = name;
+        }
+
+        private String getName() {
+            return name;
+        }
     }
 }
