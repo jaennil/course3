@@ -14,6 +14,9 @@ public class CategoryPage extends BasePage {
     @FindBy(xpath = "//div[@data-auto='filter']")
     private List<WebElement> filters;
 
+    @FindBy(xpath = "//button[@data-zone-name='sort']")
+    private List<WebElement> sortingButtons;
+
 
     public CategoryPage applyFilter(String key, String value) {
         waitUntilElementsIsVisible(filters);
@@ -43,6 +46,22 @@ public class CategoryPage extends BasePage {
                 filterValue.click();
                 return this;
             }
+        }
+
+        return this;
+    }
+
+    public CategoryPage applySorting(String type) {
+        waitUntilElementsIsVisible(sortingButtons);
+
+        for (WebElement sortingButton : sortingButtons) {
+            if (!sortingButton.getText().equals(type)) {
+                continue;
+            }
+
+            waitUntilElementToBeClickable(sortingButton);
+            sortingButton.click();
+            return this;
         }
 
         return this;
