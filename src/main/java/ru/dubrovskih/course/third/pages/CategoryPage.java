@@ -1,5 +1,6 @@
 package ru.dubrovskih.course.third.pages;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,14 @@ public class CategoryPage extends BasePage {
 
     @FindBy(xpath = "//div[@data-apiary-widget-name='@light/Organic']")
     private List<WebElement> products;
+
+    @FindBy(xpath = "//input[@id='header-search']")
+    private WebElement search;
+
+    @FindBy(xpath = "//button[@data-auto='search-button']")
+    private WebElement searchButton;
+
+    private WebElement product;
 
     public CategoryPage applyFilter(String key, String value) {
         waitUntilElementsIsVisible(filters);
@@ -79,18 +88,61 @@ public class CategoryPage extends BasePage {
         waitUntilElementsIsVisible(products);
         for (int i = 0; i < amount; i++) {
             WebElement product = products.get(i);
-            String productName = product.findElement(By.xpath(".//h3")).getText();
-            String productPrice = product.findElement(By.xpath(".//span[@data-auto='snippet-price-current']/span[1]")).getText();
+            String productName = getProductName(product);
+            String productPrice = getProductPrice(product);
             System.out.println(productName + " - " + productPrice + " руб.");
         }
 
         return this;
     }
 
+    public CategoryPage saveProduct(int number) {
+        product = products.get(number - 1);
+        return this;
+    }
+
+    public CategoryPage searchSavedProduct() {
+
+        String prevProductName = getProductName(product);
+        String prevProductPrice = getProductPrice(product);
+
+
+        waitUntilElementIsVisible(search);
+
+        waitUntilElementToBeClickable(search);
+
+        search.click();
+        search.clear();
+        search.sendKeys(getProductName(product));
+
+        waitUntilElementIsVisible(searchButton);
+        waitUntilElementToBeClickable(searchButton);
+
+        searchButton.click();
+
+        waitUntilElementsIsVisible(products);
+
+        WebElement foundedProduct = products.getFirst();
+
+        Assertions.assertEquals(getProductName(foundedProduct), prevProductName);
+        Assertions.assertEquals(getProductPrice(foundedProduct), prevProductPrice);
+
+        return this;
+    }
+
+    private String getProductName(WebElement product) {
+        return product.findElement(By.xpath(".//h3")).getText();
+    }
+
+    private String getProductPrice(WebElement product) {
+        return product.findElement(By.xpath(".//span[@data-auto='snippet-price-current']/span[1]")).getText();
+    }
+
     private void waitForProductsUpdate() {
         WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(5), Duration.ofMillis(100));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@data-auto='SerpStatic-loader']")));
-        wait.until(driver -> driver.findElements(By.xpath("//div[@data-auto='SerpStatic-loader']")).isEmpty());
+        String blurBackgroundXPath = "//div[@data-auto='SerpStatic-loader']";
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(blurBackgroundXPath)));
+        wait.until(driver -> driver.findElements(By.xpath(blurBackgroundXPath)).isEmpty());
         resetDriverWait();
     }
 }

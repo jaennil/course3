@@ -23,7 +23,7 @@ public class BasePage {
     }
 
     protected void resetDriverWait() {
-        wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(3), Duration.ofSeconds(1));
+        wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(5), Duration.ofSeconds(1));
     }
 
     protected WebElement waitUntilElementIsVisible(WebElement element) {

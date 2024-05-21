@@ -21,7 +21,9 @@ public class YandexMarketTests extends BaseTests {
                 .clickSubcategory("Планшеты")
                 .applyFilter("Производитель", "Samsung")
                 .applySorting("подешевле")
-                .logProducts(5);
+                .logProducts(5)
+                .saveProduct(2)
+                .searchSavedProduct();
 
         try {
             Thread.sleep(5000);
