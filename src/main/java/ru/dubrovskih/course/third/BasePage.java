@@ -1,4 +1,4 @@
-package ru.dubrovskih.course;
+package ru.dubrovskih.course.third;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -7,7 +7,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.dubrovskih.course.managers.DriverManager;
-import ru.dubrovskih.course.second.PageManager;
 
 import java.time.Duration;
 import java.util.List;

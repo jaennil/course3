@@ -9,7 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.dubrovskih.course.BasePage;
+import ru.dubrovskih.course.third.BasePage;
 
 import java.time.Duration;
 import java.util.List;
@@ -93,7 +93,7 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage clickSubcategory(String subcategory) {
+    public CategoryPage clickSubcategory(String subcategory) {
         for (WebElement item : selectedCategory.findElements(By.xpath(".//li//a"))) {
             if (item.getText().equals(subcategory)) {
                 waitUntilElementIsVisible(item);
@@ -103,7 +103,7 @@ public class HomePage extends BasePage {
         }
 
         verifySubcategoryOpened(subcategory);
-        return this;
+        return pageManager.getCategoryPage();
     }
 
     private void verifySubcategoryOpened(String subcategory) {

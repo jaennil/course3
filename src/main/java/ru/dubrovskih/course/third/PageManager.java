@@ -1,10 +1,12 @@
 package ru.dubrovskih.course.third;
 
+import ru.dubrovskih.course.third.pages.CategoryPage;
 import ru.dubrovskih.course.third.pages.HomePage;
 
 public class PageManager {
     private static PageManager pageManager;
     private HomePage homePage;
+    private CategoryPage categoryPage;
 
     private PageManager() {
     }
@@ -23,5 +25,13 @@ public class PageManager {
         }
 
         return homePage;
+    }
+
+    public CategoryPage getCategoryPage() {
+        if (categoryPage == null) {
+            categoryPage = new CategoryPage();
+        }
+
+        return categoryPage;
     }
 }
