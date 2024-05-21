@@ -2,5 +2,7 @@ target/
 .vim/
 .idea/
 .allure/
+.settings/
 .project
+.classpath
 nohup.out

@@ -18,10 +18,10 @@ public class YandexMarketTests extends BaseTests {
                 .clickCatalogButton()
                 .hoverLeftCatalogItem("Ноутбуки и компьютеры")
                 .findCategory("Ноутбуки и планшеты")
-                .findSubcategory();
+                .clickSubcategory("Планшеты");
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

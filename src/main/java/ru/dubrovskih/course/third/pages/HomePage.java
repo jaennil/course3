@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.dubrovskih.course.BasePage;
 
-import java.sql.DriverManager;
 import java.time.Duration;
 import java.util.List;
 
@@ -94,11 +93,22 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage findSubcategory(String subcategory) {
+    public HomePage clickSubcategory(String subcategory) {
+        for (WebElement item : selectedCategory.findElements(By.xpath(".//li//a"))) {
+            if (item.getText().equals(subcategory)) {
+                waitUntilElementIsVisible(item);
+                item.click();
+                break;
+            }
+        }
 
-
-
+        verifySubcategoryOpened(subcategory);
         return this;
+    }
+
+    private void verifySubcategoryOpened(String subcategory) {
+        String title = driverManager.getDriver().getTitle();
+        Assertions.assertTrue(title.toLowerCase().contains(subcategory.toLowerCase()));
     }
 
 }
