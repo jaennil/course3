@@ -20,7 +20,8 @@ public class YandexMarketTests extends BaseTests {
                 .findCategory("Ноутбуки и планшеты")
                 .clickSubcategory("Планшеты")
                 .applyFilter("Производитель", "Samsung")
-                .applySorting("подешевле");
+                .applySorting("подешевле")
+                .logProducts(5);
 
         try {
             Thread.sleep(5000);
