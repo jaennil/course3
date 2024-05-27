@@ -3,7 +3,7 @@
     <Appenders>
         <Console name="LogToConsole" target="SYSTEM_OUT">
             <PatternLayout
-                    pattern="%d{HH:mm:ss.SSS} [%style{%level}{blue}] - %-60X{name} %style{%-10X{stage}}{yellow} %style{%X{status}}{green} %n"/>
+                    pattern="%d{HH:mm:ss.SSS} [%style{%level}{blue}] - %-75X{name} %style{%-10X{stage}}{yellow} %style{%X{status}}{green} %n"/>
         </Console>
     </Appenders>
     <Loggers>
