@@ -1,6 +1,6 @@
 package ru.dubrovskih.course.third.pages;
 
-import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -28,16 +28,14 @@ public class HomePage extends BasePage {
 
     private WebElement selectedCategory;
 
+    @Step("open link https://market.yandex.ru/")
     public HomePage open() {
-        Allure.step("open link https://market.yandex.ru", step -> {
-            driverManager.getDriver().get("https://market.yandex.ru");
-            Allure.step("verify Yandex Market main page opened", subStep -> {
-                verifyYandexMarketMainPageOpened();
-            });
-        });
+        driverManager.getDriver().get("https://market.yandex.ru");
+        verifyYandexMarketMainPageOpened();
         return this;
     }
 
+    @Step("verify Yandex Market main page opened")
     private void verifyYandexMarketMainPageOpened() {
         String title = "Интернет-магазин Яндекс Маркет — покупки с быстрой доставкой";
         WebDriver driver = driverManager.getDriver();
@@ -51,11 +49,9 @@ public class HomePage extends BasePage {
     }
 
     public HomePage clickCatalogButton() {
-        Allure.step("choose tablet category", step -> {
-            waitUntilElementIsVisible(catalogButton);
-            waitUntilElementToBeClickable(catalogButton);
-            catalogButton.click();
-        });
+        waitUntilElementIsVisible(catalogButton);
+        waitUntilElementToBeClickable(catalogButton);
+        catalogButton.click();
 
         return this;
     }
@@ -93,6 +89,7 @@ public class HomePage extends BasePage {
         return this;
     }
 
+    @Step("open category {subcategory}")
     public CategoryPage clickSubcategory(String subcategory) {
         for (WebElement item : selectedCategory.findElements(By.xpath(".//li//a"))) {
             if (item.getText().equals(subcategory)) {
@@ -106,6 +103,7 @@ public class HomePage extends BasePage {
         return pageManager.getCategoryPage();
     }
 
+    @Step("verify that category {subcategory} opened")
     private void verifySubcategoryOpened(String subcategory) {
         String title = driverManager.getDriver().getTitle();
         Assertions.assertTrue(title.toLowerCase().contains(subcategory.toLowerCase()));

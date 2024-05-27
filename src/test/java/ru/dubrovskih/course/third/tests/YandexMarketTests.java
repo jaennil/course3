@@ -24,11 +24,5 @@ public class YandexMarketTests extends BaseTests {
                 .logProducts(5)
                 .saveProduct(2)
                 .searchSavedProduct();
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

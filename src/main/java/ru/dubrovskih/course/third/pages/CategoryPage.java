@@ -1,5 +1,7 @@
 package ru.dubrovskih.course.third.pages;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -32,6 +34,7 @@ public class CategoryPage extends BasePage {
 
     private WebElement product;
 
+    @Step("apply filter {key} to {value}")
     public CategoryPage applyFilter(String key, String value) {
         waitUntilElementsIsVisible(filters);
 
@@ -66,6 +69,7 @@ public class CategoryPage extends BasePage {
         return this;
     }
 
+    @Step("apply sorting {type}")
     public CategoryPage applySorting(String type) {
         waitUntilElementsIsVisible(sortingButtons);
 
@@ -84,6 +88,7 @@ public class CategoryPage extends BasePage {
         return this;
     }
 
+    @Step("log first {amount} products")
     public CategoryPage logProducts(int amount) {
         waitUntilElementsIsVisible(products);
         for (int i = 0; i < amount; i++) {
@@ -96,11 +101,13 @@ public class CategoryPage extends BasePage {
         return this;
     }
 
+    @Step("remember product number {number}")
     public CategoryPage saveProduct(int number) {
         product = products.get(number - 1);
         return this;
     }
 
+    @Step("enter in the search field remembered product")
     public CategoryPage searchSavedProduct() {
 
         String prevProductName = getProductName(product);
@@ -124,8 +131,10 @@ public class CategoryPage extends BasePage {
 
         WebElement foundedProduct = products.getFirst();
 
-        Assertions.assertEquals(getProductName(foundedProduct), prevProductName);
-        Assertions.assertEquals(getProductPrice(foundedProduct), prevProductPrice);
+        Allure.step("verify that in the search results first founded product is what was searched", step -> {
+            Assertions.assertEquals(getProductName(foundedProduct), prevProductName);
+            Assertions.assertEquals(getProductPrice(foundedProduct), prevProductPrice);
+        });
 
         return this;
     }
