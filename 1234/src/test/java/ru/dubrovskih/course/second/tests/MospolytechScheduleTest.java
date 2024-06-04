@@ -10,7 +10,6 @@ import ru.dubrovskih.course.second.pages.HomePage;
 
 public class MospolytechScheduleTest extends BaseTests {
 
-    @Disabled
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://mospolytech.ru schedule test")
     @Test

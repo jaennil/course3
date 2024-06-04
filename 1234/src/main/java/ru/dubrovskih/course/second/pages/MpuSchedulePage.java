@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import ru.dubrovskih.course.second.BasePage;
+import ru.dubrovskih.course.BasePage;
+import ru.dubrovskih.course.second.PageManager;
 
 import java.util.Set;
 
@@ -25,7 +26,7 @@ public class MpuSchedulePage extends BasePage {
                 Assertions.assertNotEquals(currentHandle, driver.getWindowHandle(), "new tab is not opened");
             });
         });
-        return pageManager.getDmamiSchedulePage();
+        return PageManager.getInstance().getDmamiSchedulePage();
     }
 
     private void switchToNewTab(WebElement newTabCause) {

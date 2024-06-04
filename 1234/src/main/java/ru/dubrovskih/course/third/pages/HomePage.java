@@ -9,7 +9,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.dubrovskih.course.third.BasePage;
+import ru.dubrovskih.course.BasePage;
+import ru.dubrovskih.course.third.PageManager;
 
 import java.time.Duration;
 import java.util.List;
@@ -100,7 +101,7 @@ public class HomePage extends BasePage {
         }
 
         verifySubcategoryOpened(subcategory);
-        return pageManager.getCategoryPage();
+        return PageManager.getInstance().getCategoryPage();
     }
 
     @Step("verify that category {subcategory} opened")

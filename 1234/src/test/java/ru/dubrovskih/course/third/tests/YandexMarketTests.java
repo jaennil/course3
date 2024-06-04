@@ -9,7 +9,6 @@ import ru.dubrovskih.course.third.BaseTests;
 
 public class YandexMarketTests extends BaseTests {
 
-	@Disabled
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://market.yandex.ru basic test")
     @Test

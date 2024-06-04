@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindAll;
-import ru.dubrovskih.course.second.BasePage;
+import ru.dubrovskih.course.BasePage;
 
 import java.util.List;
 
@@ -71,10 +71,11 @@ public class HomePage extends BasePage {
 	public HomePage verifyTodoState(int index, boolean state) {
 
 		Allure.step(String.format("verify that todo number %s is %s", index + 1, state ? "done" : "not done"), step -> {
+			WebElement todo = todos.get(index);
+			WebElement todoSpan = todo.findElement(By.tagName("span"));
+			String expectedClass = String.format("done-%s", state);
+
 			Allure.step(String.format("verify that done-%s css class applied", state), substep -> {
-				WebElement todo = todos.get(index);
-				WebElement todoSpan = todo.findElement(By.tagName("span"));
-				String expectedClass = String.format("done-%s", state);
 				Assertions.assertEquals(expectedClass, todoSpan.getAttribute("class"),
 						String.format("css class 'done-%s' is not applied", state));
 			});

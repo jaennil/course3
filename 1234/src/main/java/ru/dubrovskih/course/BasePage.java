@@ -1,4 +1,4 @@
-package ru.dubrovskih.course.second;
+package ru.dubrovskih.course;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,7 +13,6 @@ import java.util.List;
 
 public class BasePage {
     protected final DriverManager driverManager = DriverManager.getInstance();
-    protected final PageManager pageManager = PageManager.getInstance();
     protected WebDriverWait wait;
     protected JavascriptExecutor js = (JavascriptExecutor) driverManager.getDriver();
 
@@ -23,7 +22,7 @@ public class BasePage {
     }
 
     protected void resetDriverWait() {
-        wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(3), Duration.ofSeconds(1));
+        wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(5), Duration.ofSeconds(1));
     }
 
     protected WebElement waitUntilElementIsVisible(WebElement element) {
