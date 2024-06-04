@@ -10,7 +10,6 @@ import ru.dubrovskih.course.first.pages.HomePage;
 
 public class LambdaTest extends BaseTests {
 
-    @Disabled
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://lambdatest.githib.io sample todo app basic tests")
     @Test
