@@ -1,6 +1,8 @@
 package ru.dubrovskih.course.first.pages;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
+
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -23,7 +25,7 @@ public class HomePage extends BasePage {
 	private List<WebElement> headers;
 
 	@FindBy(xpath = "//span[@class='ng-binding']")
-	private WebElement remainingTodos;
+	private WebElement remainingTodosSpan;
 
 	@FindBy(xpath = "//ul/li")
 	private List<WebElement> todos;
@@ -56,21 +58,20 @@ public class HomePage extends BasePage {
 		return this;
 	}
 
+	@Step("verify '5 of 5 remaining' text presence")
 	public HomePage verifyRemainingTasksTextPresence() {
-		Allure.step("verify '5 of 5 remaining' text presence", step -> {
-			WebElement remainingTasksElement = waitUntilElementIsVisible(remainingTodos);
-			Assertions.assertTrue(remainingTasksElement.isDisplayed(), "remaining tasks text is not displayed");
-			String remainingTasksText = remainingTasksElement.getText();
-			Assertions.assertEquals("5 of 5 remaining", remainingTasksText,
-					"remaining tasks text is not equal to '5 of 5 remaining'");
-		});
+		String expectedText = "5 of 5 remaining";
+		waitUntilElementIsVisible(remainingTodosSpan);
+		Assertions.assertTrue(remainingTodosSpan.isDisplayed(), "remaining tasks text is not displayed");
+		Assertions.assertEquals(expectedText, remainingTodosSpan.getText(),
+				String.format("remaining tasks text is not equal to '%s'", expectedText));
 		return this;
 	}
 
 	public HomePage verifyTodoState(int index, boolean state) {
 
 		Allure.step(String.format("verify that todo number %s is %s", index + 1, state ? "done" : "not done"), step -> {
-			Allure.step(String.format("verify that done-%s css class applied", state), subStep -> {
+			Allure.step(String.format("verify that done-%s css class applied", state), substep -> {
 				WebElement todo = todos.get(index);
 				WebElement todoSpan = todo.findElement(By.tagName("span"));
 				String expectedClass = String.format("done-%s", state);
@@ -97,7 +98,7 @@ public class HomePage extends BasePage {
 		Allure.step(String.format("mark the todo number %s as %s", index + 1, prevTodoState ? "not done" : "done"),
 				step -> {
 					Allure.step(String.format("verify that remaining tasks amount %s by 1",
-							prevTodoState ? "increased" : "decreased"), subStep -> {
+							prevTodoState ? "increased" : "decreased"), substep -> {
 								Assertions.assertEquals(remainingTodosAmount + (prevTodoState ? 1 : -1),
 										getRemainingTodosAmount(),
 										"remaining tasks amount is not " + (prevTodoState ? "increased" : "decreased")
@@ -110,32 +111,33 @@ public class HomePage extends BasePage {
 	}
 
 	private int getRemainingTodosAmount() {
-		String remainingTodosText = remainingTodos.getText();
+		String remainingTodosText = remainingTodosSpan.getText();
 		String[] parts = remainingTodosText.split(" ");
 		return Integer.parseInt(parts[0]);
 	}
 
 	private int getTotalTodosAmount() {
-		String remainingTodosText = remainingTodos.getText();
+		String remainingTodosText = remainingTodosSpan.getText();
 		String[] parts = remainingTodosText.split(" ");
 		return Integer.parseInt(parts[2]);
 	}
 
+	@Step("add new todo")
 	public HomePage addTodo() {
-		Allure.step("add new todo", step -> {
-			int totalTodosAmount = getTotalTodosAmount();
-			int remainingTodosAmount = getRemainingTodosAmount();
+		int totalTodosAmount = getTotalTodosAmount();
+		int remainingTodosAmount = getRemainingTodosAmount();
 
-			addButton.click();
+		addButton.click();
 
-			verifyTodoState(todos.size() - 1, false);
+		verifyTodoState(todos.size() - 1, false);
 
+		Allure.step("verify that total and remaining todos amount is increased by 1", step -> {
 			Assertions.assertEquals(totalTodosAmount + 1, getTotalTodosAmount(),
 					"total todos amount is not increased by 1");
 			Assertions.assertEquals(remainingTodosAmount + 1, getRemainingTodosAmount(),
 					"remaining tasks amount is not increased by 1");
-
 		});
+
 		return this;
 	}
 }
