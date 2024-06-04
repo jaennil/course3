@@ -69,7 +69,6 @@ public class HomePage extends BasePage {
 
 	public HomePage verifyTodoState(int index, boolean state) {
 
-		// Allure step
 		Allure.step(String.format("verify that todo number %s is %s", index + 1, state ? "done" : "not done"), step -> {
 			Allure.step(String.format("verify that done-%s css class applied", state), subStep -> {
 				WebElement todo = todos.get(index);
@@ -99,8 +98,8 @@ public class HomePage extends BasePage {
 				step -> {
 					Allure.step(String.format("verify that remaining tasks amount %s by 1",
 							prevTodoState ? "increased" : "decreased"), subStep -> {
-								Assertions.assertEquals(getRemainingTodosAmount(),
-										remainingTodosAmount + (prevTodoState ? 1 : -1),
+								Assertions.assertEquals(remainingTodosAmount + (prevTodoState ? 1 : -1),
+										getRemainingTodosAmount(),
 										"remaining tasks amount is not " + (prevTodoState ? "increased" : "decreased")
 												+ " by 1");
 							});
@@ -131,9 +130,9 @@ public class HomePage extends BasePage {
 
 			verifyTodoState(todos.size() - 1, false);
 
-			Assertions.assertEquals(getTotalTodosAmount(), totalTodosAmount + 1,
+			Assertions.assertEquals(totalTodosAmount + 1, getTotalTodosAmount(),
 					"total todos amount is not increased by 1");
-			Assertions.assertEquals(getRemainingTodosAmount(), remainingTodosAmount + 1,
+			Assertions.assertEquals(remainingTodosAmount + 1, getRemainingTodosAmount(),
 					"remaining tasks amount is not increased by 1");
 
 		});
