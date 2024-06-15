@@ -40,10 +40,10 @@ public class CategoryPage extends BasePage {
 
         for (WebElement filter : filters) {
             String filterName;
+
             try {
                 filterName = filter.findElement(By.xpath(".//fieldset//legend//h4")).getText();
             } catch (NoSuchElementException e) {
-                System.out.println("[WARNING] no filter name found for some filter");
                 continue;
             }
 

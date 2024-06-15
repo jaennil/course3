@@ -1,7 +1,7 @@
 package ru.dubrovskih.course.managers;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverManager {
     private static DriverManager instance;
@@ -20,7 +20,7 @@ public class DriverManager {
 
     public WebDriver getDriver() {
         if (driver == null) {
-            driver = new ChromeDriver();
+            driver = new FirefoxDriver();
         }
 
         return driver;
