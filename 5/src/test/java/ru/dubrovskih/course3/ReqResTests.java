@@ -51,7 +51,7 @@ public class ReqResTests extends BaseTest {
 	@Test
 	void singleUserNotFoundTest() {
 		checkStatusCodeGet("/22", 404)
-				.assertThat().body(equalTo("{}"));
+				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Empty.json"));
 	}
 
 	@Test
