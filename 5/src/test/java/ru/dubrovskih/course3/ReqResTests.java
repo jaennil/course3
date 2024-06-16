@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -138,13 +139,14 @@ public class ReqResTests extends BaseTest {
                 .assertThat().body(emptyOrNullString());
 	}
 
-//	@Test
-//	void registerSuccessfulTest() {
-//		Register registerData = new Register("eve.holt@reqres.in", "pistol");
-//
-//		checkStatusCodePost("/register", registerData, 200).
-//                assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Register.json"));
-//
-//        assertThat(registerResponse).extracting("id", "token").containsExactly(notNullValue(), notNullValue());
-//	}
+	@Test
+	void registerSuccessfulTest() {
+		Register registerData = new Register("eve.holt@reqres.in", "pistol");
+
+        RegisterResponse registerResponse = checkStatusCodePost("/register", registerData, 200)
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Register.json"))
+                .extract().as(RegisterResponse.class);
+
+        assertThat(registerResponse).extracting("id", "token").allMatch(Objects::nonNull);
+	}
 }

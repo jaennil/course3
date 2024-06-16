@@ -1,13 +1,52 @@
 {
-  "data": {
-    "id": 2,
-    "name": "fuchsia rose",
-    "year": 2001,
-    "color": "#C74375",
-    "pantone_value": "17-2031"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "year": {
+          "type": "integer"
+        },
+        "color": {
+          "type": "string"
+        },
+        "pantone_value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "year",
+        "color",
+        "pantone_value"
+      ]
+    },
+    "support": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "text"
+      ]
+    }
   },
-  "support": {
-    "url": "https://reqres.in/#support-heading",
-    "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
-  }
+  "required": [
+    "data",
+    "support"
+  ]
 }
