@@ -58,7 +58,6 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>5.4.0</version>
-            <scope>test</scope>
         </dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator -->
@@ -117,7 +116,9 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
-            </plugin> <plugin>
+            </plugin>
+
+            <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>3.2.5</version>
             <configuration>

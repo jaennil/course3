@@ -1,5 +1,10 @@
 package ru.dubrovskih.course3.frontend.pages;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.restassured.response.Response;
 import lombok.Getter;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
@@ -10,6 +15,8 @@ import ru.dubrovskih.course3.frontend.BasePage;
 import io.qameta.allure.Step;
 
 import java.util.List;
+
+import static io.restassured.RestAssured.given;
 
 public class HomePage extends BasePage {
 
@@ -41,8 +48,22 @@ public class HomePage extends BasePage {
 
     }
 
+    private final String BASE_URL = "https://reqres.in";
+
     @FindBy(xpath = "//ul/li[@data-key='endpoint']")
     private List<WebElement> requestButtons;
+
+    @FindBy(xpath = "//span[@data-key='url']")
+    private WebElement requestUrlSpan;
+
+    @FindBy(xpath = "//span[@data-key='response-code']")
+    private WebElement responseCodeSpan;
+
+    @FindBy(xpath = "//pre[@data-key='output-response']")
+    private WebElement responseOutputElement;
+
+    @FindBy(xpath = "//pre[@data-key='output-request']")
+    private WebElement requestOutput;
 
     @Step("open link https://reqres.in")
     public HomePage open() {
@@ -76,11 +97,69 @@ public class HomePage extends BasePage {
         Assertions.assertNotNull(foundedButton, String.format("request button with name '%s' and http method '%s' not founded", name, httpMethod));
 
         scrollToElementJs(foundedButton);
-
         waitUntilElementToBeClickable(foundedButton);
-
         foundedButton.click();
+
+        waitUntilElementIsVisible(requestUrlSpan);
+        String requestUrn = requestUrlSpan.getText();
+        String requestUrl = BASE_URL + requestUrn;
+
+
+        Response response = switch (httpMethod) {
+            case DELETE -> delete(requestUrl);
+            case GET -> get(requestUrl);
+            case POST -> {
+                waitUntilElementIsVisible(requestOutput);
+                yield post(requestUrl, requestOutput.getText());
+            }
+            case PUT -> {
+                waitUntilElementIsVisible(requestOutput);
+                yield put(requestUrl, requestOutput.getText());
+            }
+            case PATCH -> {
+                waitUntilElementIsVisible(requestOutput);
+                yield patch(requestUrl, requestOutput.getText());
+            }
+            default -> null;
+        };
+
+        Assertions.assertNotNull(response, "wrong http method: " + httpMethod);
+
+        waitUntilElementIsVisible(responseCodeSpan);
+        int expectedStatusCode = Integer.parseInt(responseCodeSpan.getText());
+
+        int actualStatusCode = response.statusCode();
+        Assertions.assertEquals(expectedStatusCode, actualStatusCode, "api and frontend status codes doesn't match");
+
+        if (httpMethod == HttpMethod.DELETE) {
+            return this;
+        }
+
+        waitUntilElementIsVisible(responseOutputElement);
+        String expectedResponseOutput = responseOutputElement.getText();
+
+        String actualResponseOutput = response.getBody().asString();
+
+        Assertions.assertDoesNotThrow(() -> compareJsons(expectedResponseOutput, actualResponseOutput));
 
         return this;
     }
+
+    @Step("compare api and frontend apis")
+    private void compareJsons(String json1, String json2) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode expectedResponseOutput = mapper.readTree(json1);
+        JsonNode actualResponseOutput = mapper.readTree(json2);
+        ObjectNode expectedObjectNode = (ObjectNode) expectedResponseOutput;
+        ObjectNode actualObjectNode = (ObjectNode) actualResponseOutput;
+
+        expectedObjectNode.remove("id");
+        expectedObjectNode.remove("createdAt");
+        expectedObjectNode.remove("updatedAt");
+        actualObjectNode.remove("id");
+        actualObjectNode.remove("createdAt");
+        actualObjectNode.remove("updatedAt");
+        Assertions.assertEquals(expectedResponseOutput, actualResponseOutput, "api and frontend response bodies doesn't match");
+    }
+
 }
