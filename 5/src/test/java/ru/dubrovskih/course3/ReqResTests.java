@@ -170,4 +170,13 @@ public class ReqResTests extends BaseTest {
 
         assertThat(loginResponse.get("token")).isNotNull();
     }
+
+    @Test
+    void loginUnsuccessful() {
+        Map response = checkStatusCodePost("/login", Map.of("email", "peter@klaven"), 400)
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Error.json"))
+                .extract().as(Map.class);
+
+        assertThat(response.get("error")).isEqualTo("Missing password");
+    }
 }
