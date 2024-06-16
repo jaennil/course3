@@ -111,4 +111,23 @@ public class ReqResTests extends BaseTest {
         assertThat(expectedUpdateUser).extracting("name", "job").containsExactly(actualUpdateUser.getName(), actualUpdateUser.getJob());
 
     }
+
+	@Test
+	void updateUserPatchTest() {
+		CreateUser expectedUpdateUser = new CreateUser("morpheus", "zion resident");
+
+		Instant nowInstant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
+
+		UpdateUserResponse actualUpdateUser = checkStatusCodePatch("/users/2", expectedUpdateUser, 200)
+				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("UpdateUser.json"))
+				.extract().as(UpdateUserResponse.class);
+
+		Instant updatedAtInstant = Instant.parse(actualUpdateUser.getUpdatedAt());
+
+		Duration difference = Duration.between(nowInstant, updatedAtInstant);
+
+		assertThat(Math.abs(difference.getSeconds())).isLessThan(7);
+
+		assertThat(expectedUpdateUser).extracting("name", "job").containsExactly(actualUpdateUser.getName(), actualUpdateUser.getJob());
+	}
 }

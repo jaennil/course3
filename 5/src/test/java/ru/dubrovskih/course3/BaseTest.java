@@ -46,4 +46,13 @@ public class BaseTest {
                 .log().all()
                 .statusCode(code);
     }
+
+    static ValidatableResponse checkStatusCodePatch(String url, Object body, int code) {
+        return given(requestSpecification)
+                .body(body)
+                .patch(url)
+                .then()
+                .log().all()
+                .statusCode(code);
+    }
 }
