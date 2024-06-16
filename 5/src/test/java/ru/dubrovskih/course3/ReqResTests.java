@@ -130,4 +130,11 @@ public class ReqResTests extends BaseTest {
 
 		assertThat(expectedUpdateUser).extracting("name", "job").containsExactly(actualUpdateUser.getName(), actualUpdateUser.getJob());
 	}
+
+	@Test
+	void deleteUserTest() {
+		checkStatusCodeDelete("/users/2", 204);
+	}
+
+	
 }

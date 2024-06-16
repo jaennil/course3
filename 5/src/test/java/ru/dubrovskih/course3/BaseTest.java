@@ -55,4 +55,12 @@ public class BaseTest {
                 .log().all()
                 .statusCode(code);
     }
+
+    static ValidatableResponse checkStatusCodeDelete(String url, int code) {
+        return given(requestSpecification)
+                .delete(url)
+                .then()
+                .log().all()
+                .statusCode(code);
+    }
 }
