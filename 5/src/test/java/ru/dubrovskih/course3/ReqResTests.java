@@ -1,7 +1,6 @@
 package ru.dubrovskih.course3;
 
 import data.*;
-import io.restassured.common.mapper.TypeRef;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +8,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -144,9 +142,9 @@ public class ReqResTests extends BaseTest {
 
 	@Test
 	void registerSuccessfulTest() {
-		Register registerData = new Register("eve.holt@reqres.in", "pistol");
+		AuthDTO registerDTO = new AuthDTO("eve.holt@reqres.in", "pistol");
 
-        RegisterResponse registerResponse = checkStatusCodePost("/register", registerData, 200)
+        RegisterResponse registerResponse = checkStatusCodePost("/register", registerDTO, 200)
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Register.json"))
                 .extract().as(RegisterResponse.class);
 
@@ -162,4 +160,14 @@ public class ReqResTests extends BaseTest {
         assertThat(response.get("error")).isEqualTo("Missing password");
     }
 
+    @Test
+    void loginSuccessful() {
+        AuthDTO loginData = new AuthDTO("eve.holt@reqres.in", "cityslicka");
+
+        Map loginResponse = checkStatusCodePost("/login", loginData, 200)
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Login.json"))
+                .extract().as(Map.class);
+
+        assertThat(loginResponse.get("token")).isNotNull();
+    }
 }

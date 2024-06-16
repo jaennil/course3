@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Register {
+public class AuthDTO {
     private String email;
     private String password;
 }
