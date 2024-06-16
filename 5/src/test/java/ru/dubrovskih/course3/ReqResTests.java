@@ -11,6 +11,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class ReqResTests extends BaseTest {
 
@@ -133,8 +134,17 @@ public class ReqResTests extends BaseTest {
 
 	@Test
 	void deleteUserTest() {
-		checkStatusCodeDelete("/users/2", 204);
+		checkStatusCodeDelete("/users/2", 204)
+                .assertThat().body(emptyOrNullString());
 	}
 
-	
+//	@Test
+//	void registerSuccessfulTest() {
+//		Register registerData = new Register("eve.holt@reqres.in", "pistol");
+//
+//		checkStatusCodePost("/register", registerData, 200).
+//                assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Register.json"));
+//
+//        assertThat(registerResponse).extracting("id", "token").containsExactly(notNullValue(), notNullValue());
+//	}
 }
