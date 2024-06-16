@@ -59,6 +59,7 @@ public class ReqResTests extends BaseTest {
 		CreateUser expectedCreatedUser = new CreateUser("morpheus", "leader");
 
 		CreateUser actualCreatedUser = checkStatusCodePost("/users", expectedCreatedUser, 201)
+				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("CreateUser.json"))
 				.extract().as(CreateUser.class);
 
 		assertThat(actualCreatedUser).isEqualTo(expectedCreatedUser);
