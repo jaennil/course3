@@ -115,41 +115,41 @@ public class ReqResTests extends BaseTest {
 
     }
 
-	@Test
-	void updateUserPatchTest() {
-		CreateUser expectedUpdateUser = new CreateUser("morpheus", "zion resident");
+    @Test
+    void updateUserPatchTest() {
+        CreateUser expectedUpdateUser = new CreateUser("morpheus", "zion resident");
 
-		Instant nowInstant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
+        Instant nowInstant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
 
-		UpdateUserResponse actualUpdateUser = checkStatusCodePatch("/users/2", expectedUpdateUser, 200)
-				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json_schemas/UpdateUser.json"))
-				.extract().as(UpdateUserResponse.class);
+        UpdateUserResponse actualUpdateUser = checkStatusCodePatch("/users/2", expectedUpdateUser, 200)
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json_schemas/UpdateUser.json"))
+                .extract().as(UpdateUserResponse.class);
 
-		Instant updatedAtInstant = Instant.parse(actualUpdateUser.getUpdatedAt());
+        Instant updatedAtInstant = Instant.parse(actualUpdateUser.getUpdatedAt());
 
-		Duration difference = Duration.between(nowInstant, updatedAtInstant);
+        Duration difference = Duration.between(nowInstant, updatedAtInstant);
 
-		assertThat(Math.abs(difference.getSeconds())).isLessThan(7);
+        assertThat(Math.abs(difference.getSeconds())).isLessThan(7);
 
-		assertThat(expectedUpdateUser).extracting("name", "job").containsExactly(actualUpdateUser.getName(), actualUpdateUser.getJob());
-	}
+        assertThat(expectedUpdateUser).extracting("name", "job").containsExactly(actualUpdateUser.getName(), actualUpdateUser.getJob());
+    }
 
-	@Test
-	void deleteUserTest() {
-		checkStatusCodeDelete("/users/2", 204)
+    @Test
+    void deleteUserTest() {
+        checkStatusCodeDelete("/users/2", 204)
                 .assertThat().body(emptyOrNullString());
-	}
+    }
 
-	@Test
-	void registerSuccessfulTest() {
-		AuthDTO registerDTO = new AuthDTO("eve.holt@reqres.in", "pistol");
+    @Test
+    void registerSuccessfulTest() {
+        AuthDTO registerDTO = new AuthDTO("eve.holt@reqres.in", "pistol");
 
         RegisterResponse registerResponse = checkStatusCodePost("/register", registerDTO, 200)
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("json_schemas/Register.json"))
                 .extract().as(RegisterResponse.class);
 
         assertThat(registerResponse).extracting("id", "token").allMatch(Objects::nonNull);
-	}
+    }
 
     @Test
     void registerUnsuccessfulTest() {

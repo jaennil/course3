@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import ru.dubrovskih.course3.frontend.pages.HomePage;
 
-public class ReqResTests  extends BaseTest {
+public class ReqResTests extends BaseTest {
 
     @Test
     @ExtendWith(CustomTestWatcher.class)
@@ -13,7 +13,7 @@ public class ReqResTests  extends BaseTest {
     public void basicTest() {
         HomePage homePage = pageManager.getHomePage().open();
 
-        for (HomePage.RequestButton button: HomePage.RequestButton.values()) {
+        for (HomePage.RequestButton button : HomePage.RequestButton.values()) {
             homePage.clickRequestButton(button.getName(), button.getMethod());
         }
     }

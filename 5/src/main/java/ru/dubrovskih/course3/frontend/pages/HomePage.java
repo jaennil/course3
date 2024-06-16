@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lombok.Getter;
 import org.junit.jupiter.api.Assertions;
@@ -12,56 +13,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.http.HttpMethod;
 import org.openqa.selenium.support.FindBy;
 import ru.dubrovskih.course3.frontend.BasePage;
-import io.qameta.allure.Step;
 
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
-
 public class HomePage extends BasePage {
 
-    @Getter
-    public enum RequestButton {
-        LIST_USERS("LIST USERS", HttpMethod.GET),
-        SINGLE_USER("SINGLE USER", HttpMethod.GET),
-        SINGLE_USER_NOT_FOUND("SINGLE USER NOT FOUND", HttpMethod.GET),
-        LIST_RESOURCE("LIST <RESOURCE>", HttpMethod.GET),
-        SINGLE_RESOURCE("SINGLE <RESOURCE>", HttpMethod.GET),
-        SINGLE_RESOURCE_NOT_FOUND("SINGLE <RESOURCE> NOT FOUND", HttpMethod.GET),
-        CREATE("CREATE", HttpMethod.POST),
-        UPDATE("UPDATE", HttpMethod.PUT),
-        UPDATE_PATCH("UPDATE", HttpMethod.PATCH),
-        DELETE("DELETE", HttpMethod.DELETE),
-        REGISTER_SUCCESSFUL("REGISTER - SUCCESSFUL", HttpMethod.POST),
-        REGISTER_UNSUCCESSFUL("REGISTER - UNSUCCESSFUL", HttpMethod.POST),
-        LOGIN_SUCCESSFUL("LOGIN - SUCCESSFUL", HttpMethod.POST),
-        LOGIN_UNSUCCESSFUL("LOGIN - UNSUCCESSFUL", HttpMethod.POST),
-        DELAYED_RESPONSE("DELAYED RESPONSE", HttpMethod.GET);
-
-        private final String name;
-        private final HttpMethod method;
-
-        RequestButton(String name, HttpMethod method) {
-            this.name = name;
-            this.method = method;
-        }
-
-    }
-
     private final String BASE_URL = "https://reqres.in";
-
     @FindBy(xpath = "//ul/li[@data-key='endpoint']")
     private List<WebElement> requestButtons;
-
     @FindBy(xpath = "//span[@data-key='url']")
     private WebElement requestUrlSpan;
-
     @FindBy(xpath = "//span[@data-key='response-code']")
     private WebElement responseCodeSpan;
-
     @FindBy(xpath = "//pre[@data-key='output-response']")
     private WebElement responseOutputElement;
-
     @FindBy(xpath = "//pre[@data-key='output-request']")
     private WebElement requestOutput;
 
@@ -160,6 +125,34 @@ public class HomePage extends BasePage {
         actualObjectNode.remove("createdAt");
         actualObjectNode.remove("updatedAt");
         Assertions.assertEquals(expectedResponseOutput, actualResponseOutput, "api and frontend response bodies doesn't match");
+    }
+
+    @Getter
+    public enum RequestButton {
+        LIST_USERS("LIST USERS", HttpMethod.GET),
+        SINGLE_USER("SINGLE USER", HttpMethod.GET),
+        SINGLE_USER_NOT_FOUND("SINGLE USER NOT FOUND", HttpMethod.GET),
+        LIST_RESOURCE("LIST <RESOURCE>", HttpMethod.GET),
+        SINGLE_RESOURCE("SINGLE <RESOURCE>", HttpMethod.GET),
+        SINGLE_RESOURCE_NOT_FOUND("SINGLE <RESOURCE> NOT FOUND", HttpMethod.GET),
+        CREATE("CREATE", HttpMethod.POST),
+        UPDATE("UPDATE", HttpMethod.PUT),
+        UPDATE_PATCH("UPDATE", HttpMethod.PATCH),
+        DELETE("DELETE", HttpMethod.DELETE),
+        REGISTER_SUCCESSFUL("REGISTER - SUCCESSFUL", HttpMethod.POST),
+        REGISTER_UNSUCCESSFUL("REGISTER - UNSUCCESSFUL", HttpMethod.POST),
+        LOGIN_SUCCESSFUL("LOGIN - SUCCESSFUL", HttpMethod.POST),
+        LOGIN_UNSUCCESSFUL("LOGIN - UNSUCCESSFUL", HttpMethod.POST),
+        DELAYED_RESPONSE("DELAYED RESPONSE", HttpMethod.GET);
+
+        private final String name;
+        private final HttpMethod method;
+
+        RequestButton(String name, HttpMethod method) {
+            this.name = name;
+            this.method = method;
+        }
+
     }
 
 }
