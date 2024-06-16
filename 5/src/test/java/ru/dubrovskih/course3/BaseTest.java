@@ -9,8 +9,8 @@ import static io.restassured.RestAssured.given;
 
 public class BaseTest {
 
-    static RequestSpecification requestSpecification;
     static final String BASE_URL = "https://reqres.in/api";
+    static RequestSpecification requestSpecification;
 
     @BeforeAll
     public static void setup() {
@@ -33,6 +33,15 @@ public class BaseTest {
         return given(requestSpecification)
                 .body(body)
                 .post(url)
+                .then()
+                .log().all()
+                .statusCode(code);
+    }
+
+    static ValidatableResponse checkStatusCodePut(String url, Object body, int code) {
+        return given(requestSpecification)
+                .body(body)
+                .put(url)
                 .then()
                 .log().all()
                 .statusCode(code);
