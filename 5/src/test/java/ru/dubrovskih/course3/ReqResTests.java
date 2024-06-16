@@ -75,4 +75,17 @@ public class ReqResTests extends BaseTest {
 
 		assertThat(resources).allMatch(resource -> resource.getId() != null);
 	}
+
+	@Test
+	void singleResourceTest() {
+		SingleResourceResponse singleResourceResponse = checkStatusCodeGet("/unknown/2", 200)
+				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("SingleResource.json"))
+				.extract().as(SingleResourceResponse.class);
+
+		Resource expectedResource = new Resource(2, "fuchsia rose", 2001, "#C74375", "17-2031");
+
+		Resource actualResource = singleResourceResponse.getData();
+
+		assertThat(expectedResource).isEqualTo(actualResource);
+	}
 }
