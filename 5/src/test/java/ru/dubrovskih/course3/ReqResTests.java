@@ -1,6 +1,7 @@
 package ru.dubrovskih.course3;
 
 import data.*;
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.Test;
 
@@ -154,10 +155,11 @@ public class ReqResTests extends BaseTest {
 
     @Test
     void registerUnsuccessfulTest() {
-        HashMap response = checkStatusCodePost("/register", Map.of("email", "sydney@fife"), 400)
+        Map response = checkStatusCodePost("/register", Map.of("email", "sydney@fife"), 400)
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Error.json"))
-                .extract().as(HashMap.class);
+                .extract().as(Map.class);
 
         assertThat(response.get("error")).isEqualTo("Missing password");
     }
+
 }
