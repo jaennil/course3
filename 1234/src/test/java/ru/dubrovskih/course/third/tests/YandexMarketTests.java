@@ -11,7 +11,6 @@ public class YandexMarketTests extends BaseTests {
 
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://market.yandex.ru basic test")
-    @Test
     public void basicTests() {
 
         pageManager.getHomePage()

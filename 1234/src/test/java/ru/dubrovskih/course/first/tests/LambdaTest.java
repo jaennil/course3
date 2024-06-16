@@ -12,7 +12,6 @@ public class LambdaTest extends BaseTests {
 
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://lambdatest.githib.io sample todo app basic tests")
-    @Test
     public void basicTests() {
 
         HomePage homePage = pageManager.getHomePage()

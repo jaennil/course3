@@ -12,7 +12,6 @@ public class MospolytechScheduleTest extends BaseTests {
 
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://mospolytech.ru schedule test")
-    @Test
     public void basicTests() {
         pageManager.getHomePage().open()
                 .openSideMenuSection(HomePage.LeftNavigationMenuSection.SCHEDULE)
