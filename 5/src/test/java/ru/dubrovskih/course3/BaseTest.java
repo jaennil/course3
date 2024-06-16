@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 public class BaseTest {
 
     static RequestSpecification requestSpecification;
-    static final String BASE_URL = "https://reqres.in/api/users";
+    static final String BASE_URL = "https://reqres.in/api";
 
     @BeforeAll
     public static void setup() {

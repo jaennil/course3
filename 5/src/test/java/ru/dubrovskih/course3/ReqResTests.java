@@ -20,7 +20,7 @@ public class ReqResTests extends BaseTest {
 	@Test
 	void listUsersTest() {
 
-		ListUsersResponse listUsersResponse = checkStatusCodeGet("?page=2", 200)
+		ListUsersResponse listUsersResponse = checkStatusCodeGet("/users?page=2", 200)
 				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("ListUsers.json"))
 				.extract().as(ListUsersResponse.class);
 
@@ -37,7 +37,7 @@ public class ReqResTests extends BaseTest {
 
 	@Test
 	void singleUserTest() {
-		SingleUserResponse singleUserResponse = checkStatusCodeGet("/2", 200)
+		SingleUserResponse singleUserResponse = checkStatusCodeGet("/users/2", 200)
 				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("SingleUser.json"))
 				.extract().as(SingleUserResponse.class);
 
@@ -63,5 +63,16 @@ public class ReqResTests extends BaseTest {
 				.extract().as(CreateUser.class);
 
 		assertThat(actualCreatedUser).isEqualTo(expectedCreatedUser);
+	}
+
+	@Test
+	void listResourceTest() {
+		ListResourceResponse listResourceResponse = checkStatusCodeGet("/unknown", 200)
+				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("ListResource.json"))
+				.extract().as(ListResourceResponse.class);
+
+		List<Resource> resources = listResourceResponse.getData();
+
+		assertThat(resources).allMatch(resource -> resource.getId() != null);
 	}
 }
