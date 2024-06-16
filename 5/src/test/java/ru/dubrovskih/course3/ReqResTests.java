@@ -179,4 +179,19 @@ public class ReqResTests extends BaseTest {
 
         assertThat(response.get("error")).isEqualTo("Missing password");
     }
+
+    @Test
+    void delayedResponseTest() {
+        ListUsersResponse listUsersResponse = checkStatusCodeGet("/users?delay=3", 200)
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("ListUsers.json"))
+                .extract().as(ListUsersResponse.class);
+
+        assertThat(listUsersResponse).isNotNull()
+                .extracting("page", "perPage", "total", "totalPages")
+                .containsExactly(1, 6, 12, 2);
+
+        List<User> users = listUsersResponse.getData();
+
+        assertThat(users).allMatch(user -> user.getId() != null);
+    }
 }
