@@ -6,6 +6,7 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeAll;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.lessThan;
 
 public class BaseTest {
 
@@ -26,8 +27,18 @@ public class BaseTest {
                 .get(url)
                 .then()
                 .log().all()
+                .statusCode(code)
+                .time(lessThan(1000L));
+    }
+
+    static ValidatableResponse checkStatusCodeGetWithoutTime(String url, int code) {
+        return given(requestSpecification)
+                .get(url)
+                .then()
+                .log().all()
                 .statusCode(code);
     }
+
 
     static ValidatableResponse checkStatusCodePost(String url, Object body, int code) {
         return given(requestSpecification)
@@ -35,7 +46,8 @@ public class BaseTest {
                 .post(url)
                 .then()
                 .log().all()
-                .statusCode(code);
+                .statusCode(code)
+                .time(lessThan(1000L));
     }
 
     static ValidatableResponse checkStatusCodePut(String url, Object body, int code) {
@@ -44,7 +56,8 @@ public class BaseTest {
                 .put(url)
                 .then()
                 .log().all()
-                .statusCode(code);
+                .statusCode(code)
+                .time(lessThan(1000L));
     }
 
     static ValidatableResponse checkStatusCodePatch(String url, Object body, int code) {
@@ -53,7 +66,8 @@ public class BaseTest {
                 .patch(url)
                 .then()
                 .log().all()
-                .statusCode(code);
+                .statusCode(code)
+                .time(lessThan(1000L));
     }
 
     static ValidatableResponse checkStatusCodeDelete(String url, int code) {
@@ -61,6 +75,7 @@ public class BaseTest {
                 .delete(url)
                 .then()
                 .log().all()
-                .statusCode(code);
+                .statusCode(code)
+                .time(lessThan(1000L));
     }
 }

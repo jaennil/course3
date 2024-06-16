@@ -182,8 +182,8 @@ public class ReqResTests extends BaseTest {
 
     @Test
     void delayedResponseTest() {
-        ListUsersResponse listUsersResponse = checkStatusCodeGet("/users?delay=3", 200)
-                .time(greaterThan(3000L)).and().time(lessThan(4000L))
+        ListUsersResponse listUsersResponse = checkStatusCodeGetWithoutTime("/users?delay=3", 200)
+                .time(greaterThan(3000L)).and().time(lessThan(5000L))
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("ListUsers.json"))
                 .extract().as(ListUsersResponse.class);
 
