@@ -88,4 +88,10 @@ public class ReqResTests extends BaseTest {
 
 		assertThat(expectedResource).isEqualTo(actualResource);
 	}
+
+	@Test
+	void singleResourceNotFoundTest() {
+		checkStatusCodeGet("/unknown/23", 404)
+				.assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Empty.json"));
+	}
 }
