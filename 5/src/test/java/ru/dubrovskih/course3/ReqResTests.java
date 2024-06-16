@@ -8,7 +8,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -149,4 +151,13 @@ public class ReqResTests extends BaseTest {
 
         assertThat(registerResponse).extracting("id", "token").allMatch(Objects::nonNull);
 	}
+
+    @Test
+    void registerUnsuccessfulTest() {
+        HashMap response = checkStatusCodePost("/register", Map.of("email", "sydney@fife"), 400)
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Error.json"))
+                .extract().as(HashMap.class);
+
+        assertThat(response.get("error")).isEqualTo("Missing password");
+    }
 }
