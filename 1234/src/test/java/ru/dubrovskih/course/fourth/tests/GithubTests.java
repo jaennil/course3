@@ -6,12 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import ru.dubrovskih.course.CustomTestWatcher;
 import ru.dubrovskih.course.fourth.BaseTests;
 
-public class GithubTest extends BaseTests {
+public class GithubTests extends BaseTests {
 
     @ExtendWith(CustomTestWatcher.class)
-    @DisplayName("https://github.com basic tests")
+    @DisplayName("https://github.com search test")
     @Test
-    public void basicTests() {
+    public void searchTest() {
 
         final String input = "rust-lang/rust";
 
@@ -20,11 +20,14 @@ public class GithubTest extends BaseTests {
                 .verifyFirstFoundedRepositoryName(input)
                 .clickOnTheRepository(input)
                 .verifyTitleContains(input);
+    }
 
-        try {
-            Thread.sleep(3000);
-        } catch (Exception ignored) {
-
-        }
+    @ExtendWith(CustomTestWatcher.class)
+    @DisplayName("https://github.com contributors test")
+    @Test
+    public void contributorsTest() {
+        pageManager.getRepositoryPage().open("rust-lang/rust")
+                .clickContributorsButton().verifyContributorsPageOpened()
+                .logContributors(5);
     }
 }

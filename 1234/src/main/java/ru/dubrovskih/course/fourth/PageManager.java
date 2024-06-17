@@ -1,5 +1,6 @@
 package ru.dubrovskih.course.fourth;
 
+import ru.dubrovskih.course.fourth.pages.ContributorsPage;
 import ru.dubrovskih.course.fourth.pages.HomePage;
 import ru.dubrovskih.course.fourth.pages.RepositoryPage;
 import ru.dubrovskih.course.fourth.pages.SearchPage;
@@ -9,6 +10,7 @@ public class PageManager {
     private HomePage homePage;
     private SearchPage searchPage;
     private RepositoryPage repositoryPage;
+    private ContributorsPage contributorsPage;
 
     private PageManager() {
     }
@@ -43,6 +45,14 @@ public class PageManager {
         }
 
         return repositoryPage;
+    }
+
+    public ContributorsPage getContributorsPage() {
+        if (contributorsPage == null) {
+            contributorsPage = new ContributorsPage();
+        }
+
+        return contributorsPage;
     }
 }
 
