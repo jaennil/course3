@@ -1,6 +1,5 @@
 package ru.dubrovskih.course.third.tests;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +8,7 @@ import ru.dubrovskih.course.third.BaseTests;
 
 public class YandexMarketTests extends BaseTests {
 
+    @Test
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://market.yandex.ru basic test")
     public void basicTests() {

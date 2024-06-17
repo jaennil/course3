@@ -1,4 +1,5 @@
 package ru.dubrovskih.course.fourth.pages;
+
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,7 @@ public class RepositoryPage extends BasePage {
 
     @Step("open repository page https://github.com/{repositoryName}")
     public RepositoryPage open(String repositoryName) {
-        driverManager.getDriver().get("https://github.com/"+repositoryName);
+        driverManager.getDriver().get("https://github.com/" + repositoryName);
 
         verifyTitleContains(repositoryName);
 

@@ -1,6 +1,5 @@
 package ru.dubrovskih.course.first.tests;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +9,7 @@ import ru.dubrovskih.course.first.pages.HomePage;
 
 public class LambdaTest extends BaseTests {
 
+    @Test
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://lambdatest.githib.io sample todo app basic tests")
     public void basicTests() {

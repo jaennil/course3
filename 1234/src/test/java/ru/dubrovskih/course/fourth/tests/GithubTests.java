@@ -8,9 +8,9 @@ import ru.dubrovskih.course.fourth.BaseTests;
 
 public class GithubTests extends BaseTests {
 
-    @ExtendWith(CustomTestWatcher.class)
-    @DisplayName("https://github.com search test")
     @Test
+    @DisplayName("https://github.com search test")
+    @ExtendWith(CustomTestWatcher.class)
     public void searchTest() {
 
         final String input = "rust-lang/rust";
@@ -22,12 +22,26 @@ public class GithubTests extends BaseTests {
                 .verifyTitleContains(input);
     }
 
-    @ExtendWith(CustomTestWatcher.class)
-    @DisplayName("https://github.com contributors test")
     @Test
+    @DisplayName("https://github.com contributors test")
+    @ExtendWith(CustomTestWatcher.class)
     public void contributorsTest() {
         pageManager.getRepositoryPage().open("rust-lang/rust")
                 .clickContributorsButton().verifyContributorsPageOpened()
                 .logContributors(5);
+    }
+
+    @Test
+    @DisplayName("https://github.com trending repositories filters test")
+    @ExtendWith(CustomTestWatcher.class)
+    public void trendingRepositoriesFiltersTest() {
+        pageManager.getHomePage().open().hoverHeaderMenuItem("Open Source").clickOpenSourceRepositoriesButton("Trending").verifyTrendingPageOpened().applyFilterByProgrammingLanguage("Rust")
+                .logRepositories(5);
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

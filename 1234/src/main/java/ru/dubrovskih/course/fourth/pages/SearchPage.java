@@ -12,12 +12,10 @@ import java.util.List;
 
 public class SearchPage extends BasePage {
 
-    @FindBy(xpath="//div[@data-testid='results-list']/div")
-    private List<WebElement> repositories;
-
     private final String repositoryNameXPath = ".//h3//a//span";
-
     private final String repositoryLinkXPath = ".//a";
+    @FindBy(xpath = "//div[@data-testid='results-list']/div")
+    private List<WebElement> repositories;
 
     @Step("verify first founded repository name is '{name}")
     public SearchPage verifyFirstFoundedRepositoryName(String name) {

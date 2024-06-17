@@ -1,57 +1,104 @@
 package ru.dubrovskih.course.fourth.pages;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.dubrovskih.course.BasePage;
 import ru.dubrovskih.course.fourth.PageManager;
 
+import java.util.List;
+
 public class HomePage extends BasePage {
 
-	@FindBy(xpath = "//qbsearch-input")
-	private WebElement searchInput;
+    @FindBy(xpath = "//qbsearch-input")
+    private WebElement searchInput;
 
-	@FindBy(id = "query-builder-test")
-	private WebElement subSearchInput;
+    @FindBy(id = "query-builder-test")
+    private WebElement subSearchInput;
 
-	@Step("open link https://github.com")
-	public HomePage open() {
-		driverManager.getDriver().get("https://github.com");
+    @FindBy(xpath = "//header//nav/ul/li")
+    private List<WebElement> headerMenuItems;
 
-		verifyOpened();
+    @FindBy(xpath = "//span[@id='open-source-repositories-heading']/following-sibling::ul/li")
+    private List<WebElement> openSourceRepositoriesButtons;
 
-		return this;
-	}
+    @Step("open link https://github.com")
+    public HomePage open() {
+        driverManager.getDriver().get("https://github.com");
 
-	@Step("verify github.com home page opened")
-	private void verifyOpened() {
-		final String titlePart = "GitHub: Let’s build from here";
+        verifyOpened();
 
-		wait.until(ExpectedConditions.titleContains(titlePart));
+        return this;
+    }
 
-		String title = driverManager.getDriver().getTitle();
+    @Step("verify github.com home page opened")
+    private void verifyOpened() {
+        final String titlePart = "GitHub: Let’s build from here";
 
-		Assertions.assertTrue(title.contains(titlePart));
-	}
+        wait.until(ExpectedConditions.titleContains(titlePart));
 
-	@Step("click on the search input")
-	public SearchPage search(String input) {
-		waitUntilElementIsVisible(searchInput);
-		waitUntilElementToBeClickable(searchInput);
-		searchInput.click();
+        String title = driverManager.getDriver().getTitle();
 
-		waitUntilElementIsVisible(subSearchInput);
+        Assertions.assertTrue(title.contains(titlePart));
+    }
 
-		subSearchInput.sendKeys(input);
+    @Step("click on the search input")
+    public SearchPage search(String input) {
+        waitUntilElementIsVisible(searchInput);
+        waitUntilElementToBeClickable(searchInput);
+        searchInput.click();
 
-		subSearchInput.sendKeys(Keys.RETURN);
+        waitUntilElementIsVisible(subSearchInput);
 
-		return PageManager.getInstance().getSearchPage();
-	}
+        subSearchInput.sendKeys(input);
+
+        subSearchInput.sendKeys(Keys.RETURN);
+
+        return PageManager.getInstance().getSearchPage();
+    }
+
+    @Step("hover header menu item '{name}'")
+    public HomePage hoverHeaderMenuItem(String name) {
+
+        waitUntilElementsIsVisible(headerMenuItems);
+
+        for (WebElement menuItem : headerMenuItems) {
+            String menuItemName = menuItem.findElement(By.tagName("button")).getText();
+            if (menuItemName.equals(name)) {
+                Actions actions = new Actions(driverManager.getDriver());
+                actions.moveToElement(menuItem).perform();
+                break;
+            }
+        }
+
+        return this;
+    }
+
+    @Step("click button '{name}' in the Open Source submenu")
+    public TrendingPage clickOpenSourceRepositoriesButton(String name) {
+
+        waitUntilElementsIsVisible(openSourceRepositoriesButtons);
+
+        WebElement foundedButton = null;
+        for (WebElement button : openSourceRepositoriesButtons) {
+            String buttonName = button.findElement(By.tagName("a")).getText();
+            if (buttonName.equals(name)) {
+                foundedButton = button;
+                break;
+            }
+        }
+
+        Assertions.assertNotNull(foundedButton, String.format("can't find button with name '%s'", name));
+
+        waitUntilElementToBeClickable(foundedButton);
+        foundedButton.click();
+
+        return PageManager.getInstance().getTrendingPage();
+    }
 
 }

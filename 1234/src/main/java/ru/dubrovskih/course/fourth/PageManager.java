@@ -1,9 +1,6 @@
 package ru.dubrovskih.course.fourth;
 
-import ru.dubrovskih.course.fourth.pages.ContributorsPage;
-import ru.dubrovskih.course.fourth.pages.HomePage;
-import ru.dubrovskih.course.fourth.pages.RepositoryPage;
-import ru.dubrovskih.course.fourth.pages.SearchPage;
+import ru.dubrovskih.course.fourth.pages.*;
 
 public class PageManager {
     private static PageManager pageManager;
@@ -11,6 +8,7 @@ public class PageManager {
     private SearchPage searchPage;
     private RepositoryPage repositoryPage;
     private ContributorsPage contributorsPage;
+    private TrendingPage trendingPage;
 
     private PageManager() {
     }
@@ -53,6 +51,14 @@ public class PageManager {
         }
 
         return contributorsPage;
+    }
+
+    public TrendingPage getTrendingPage() {
+        if (trendingPage == null) {
+            trendingPage = new TrendingPage();
+        }
+
+        return trendingPage;
     }
 }
 

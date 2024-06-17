@@ -1,6 +1,5 @@
 package ru.dubrovskih.course.second.tests;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +9,7 @@ import ru.dubrovskih.course.second.pages.HomePage;
 
 public class MospolytechScheduleTest extends BaseTests {
 
+    @Test
     @ExtendWith(CustomTestWatcher.class)
     @DisplayName("https://mospolytech.ru schedule test")
     public void basicTests() {

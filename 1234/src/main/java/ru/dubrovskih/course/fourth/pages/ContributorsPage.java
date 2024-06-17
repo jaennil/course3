@@ -3,19 +3,18 @@ package ru.dubrovskih.course.fourth.pages;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.dubrovskih.course.BasePage;
 
 import java.util.List;
 
 public class ContributorsPage extends BasePage {
 
-    @FindBy(xpath = "//div[@id = 'contributors']//li")
-    private List<WebElement> contributors;
-
     private final String contributorUsernameXPath = ".//h3//a/following::span/following-sibling::a";
     private final String contributorCommitsXPath = ".//h3//span//a";
+    @FindBy(xpath = "//div[@id = 'contributors']//li")
+    private List<WebElement> contributors;
 
     public ContributorsPage verifyContributorsPageOpened() {
         wait.until(ExpectedConditions.titleContains("Contributors"));
@@ -38,7 +37,7 @@ public class ContributorsPage extends BasePage {
 
             String commits = contributor.findElement(By.xpath(contributorCommitsXPath)).getText();
 
-            System.out.printf("%s. %s - %s%n", i+1, contributorUsername, commits);
+            System.out.printf("%s. %s - %s%n", i + 1, contributorUsername, commits);
         }
         System.out.println();
 
