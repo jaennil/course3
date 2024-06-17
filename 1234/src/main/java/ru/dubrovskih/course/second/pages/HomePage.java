@@ -25,6 +25,7 @@ public class HomePage extends BasePage {
             waitUntilElementsIsVisible(leftNavigationMenu);
             WebElement menuItem = getLeftNavigationMenuItem(section);
             Assertions.assertNotNull(menuItem, String.format("menu item '%s' is not found", section.getName()));
+            waitUntilElementToBeClickable(menuItem);
             menuItem.click();
         });
         return PageManager.getInstance().getMpuSchedulePage();
