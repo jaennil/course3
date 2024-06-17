@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import ru.dubrovskih.course.CustomTestWatcher;
 import ru.dubrovskih.course.fourth.BaseTests;
-import ru.dubrovskih.course.fourth.pages.HomePage;
 
 public class GithubTest extends BaseTests {
 
@@ -14,8 +13,13 @@ public class GithubTest extends BaseTests {
     @Test
     public void basicTests() {
 
-        HomePage homePage = pageManager.getHomePage()
-                .open();
+        final String input = "rust-lang/rust";
+
+        pageManager.getHomePage()
+                .open().search(input)
+                .verifyFirstFoundedRepositoryName(input)
+                .clickOnTheRepository(input)
+                .verifyTitleContains(input);
 
         try {
             Thread.sleep(3000);
